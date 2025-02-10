@@ -1,5 +1,5 @@
 @def title = "GMT.jl memo"
-@def tags = ["GMT", "code"]
+@def tags = ["GMT", "julia", "code"]
 
 # GMT memo
 
