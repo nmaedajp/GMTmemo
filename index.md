@@ -53,4 +53,4 @@ juliaの[ダウンロードページ](https://julialang.org/downloads/)から
 * Genric Mapping Tools [https://www.generic-mapping-tools.org](https://www.generic-mapping-tools.org)
   * Wessel et al.:The Generic Mapping Tools Version 6, 2019. [https://doi.org/10.1029/2019GC008515](https://doi.org/10.1029/2019GC008515) 
 * GMT.jl [https://www.generic-mapping-tools.org/GMTjl_doc/](https://www.generic-mapping-tools.org/GMTjl_doc/)
-* https://www.youtube.com/c/TheGenericMappingTools
+* YouTube [Generic Mapping Tools](https://www.youtube.com/c/TheGenericMappingTools)
