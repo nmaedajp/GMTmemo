@@ -94,6 +94,7 @@ symobolの種類の例は，[Basic geometric symbols](https://www.generic-mappin
 
 また，scatterのオプションを指定した例としては，[Scatters](https://www.generic-mapping-tools.org/GMTjl_doc/examples/plotting_functions/040_scatter/index.html) をみると，意味がわかりやすい．
 
+## 星印：単色
 ```julia:./scatter4.jl
 using GMT
 using Random
@@ -121,6 +122,8 @@ scatter(x, y,
 gmtend()
 ```
 \fig{./output/scatter4}
+
+## 星印：カラーパレット
 
 値により，色を塗り分けることができる．
 上の例では，`color=:magenta`のように色名で指定しているので，同じ色になっているが，
@@ -159,7 +162,7 @@ gmtend()
 
 * 大きさが変わっているのがなぜかわからず
 
-
+## 長方形
 長方形についても書くことはできるが，向きや大きさを描くためには，
 GMTのオプションである必要があるようだ．
 
@@ -201,6 +204,83 @@ gmtend()
 なかなか難敵．
 GMTのオプションじゃないと動かないケースがある．
 もともと，"J"のシンボルは `GMT.jl` のマニュアルにないので，渡し方を試さないといけない．
+
+## 星印：GMTオプションで
+
+* 星印をGMTオプションで描いてみる．
+* 色は3番めの列（zのイメージ），大きさは4番めの列となる．
+* カラーパレットを使う．
+
+```julia:./scatter7.jl
+using GMT
+using Random
+n=100
+Random.seed!(20250214)
+x = randn(n)
+y = randn(n)
+size  = rand(n)*0.5
+z = rand(n)
+
+C = makecpt(C="rainbow", T=(0,1,0.1), continuous=true)
+xyzs = hcat(x, y, z, size)
+flfig = joinpath(@OUTPUT, "scatter7")
+gmtbegin(flfig, fmt="png")
+basemap(region=(-3.5, 3.5, -3.5, 3.5), 
+    figscale=(1.0, 1.0), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel="x", ylabel="y")
+scatter(xyzs, 
+   S="a",               # マーカーの形状を星印に
+   markerline =(0.3, :red), # markerline を赤色で太さ0.3pに
+#    markersize=size,       # データの中で定義しているので，不要
+   color=C,          # color でカラーパレットを指定
+#    zcolor=zcolor,         # データの中で定義しているので，不要
+   alpha=50                 # alpha で透明度を指定
+)
+gmtend()
+```
+\fig{./output/scatter7}
+
+* 単色で
+
+```julia:./scatter8.jl
+using GMT
+using Random
+n=100
+Random.seed!(20250214)
+x = randn(n)
+y = randn(n)
+size  = rand(n)*0.5
+z = rand(n)
+
+xyzs = hcat(x, y, z, size)
+flfig = joinpath(@OUTPUT, "scatter8")
+gmtbegin(flfig, fmt="png")
+basemap(region=(-3.5, 3.5, -3.5, 3.5), 
+    figscale=(1.0, 1.0), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel="x", ylabel="y")
+scatter(xyzs, 
+   S="a",               # マーカーの形状を星印に
+   markerline =(0.3, :red), # markerline を赤色で太さ0.3pに
+#    markersize=size,       # データの中で定義しているので，不要
+   color=:magenta,          # color でカラーパレットを指定
+#    zcolor=zcolor,         # データの中で定義しているので，不要
+   alpha=50                 # alpha で透明度を指定
+)
+gmtend()
+```
+\fig{./output/scatter8}
+
+* 単色の場合でも，3番めの値が必要になる．使ってはいないが．
+* 大きさがどちらも同じ．
+* 単色 with GMT.jl 風オプションでは，座標上の大きさになっているのだろうか．
 
 # gmtbegin と gmtend
 
