@@ -215,8 +215,10 @@ td {
 
 .franklin-content .fndef tr,
 td {
-  padding: 0;
-  border: 0;
+   /* padding: 0; */
+   padding: 2px;
+   /* border: 0; */
+   border: 1px solid black;
   text-align: left;
 }
 

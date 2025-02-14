@@ -61,7 +61,8 @@ gmtend()
 
 図の大きさを指定したいときは，`figscale` の代わりに `figsize=(7.0, 7.0)` と指定すれば良い．
 
-ここでは，今風のオプションで書いているが，かつてのオプション形式も使うことができる．
+
+ここでは，`GMT.jl` 風のオプションで書いているが，`GMT` のオプション形式も使うことができる．
 
 ```julia:./scatter3.jl
 using Random
@@ -86,81 +87,175 @@ gmtend()
 ただし，`xlabel="x", ylabel="y"` の部分は今風である．
 まだ，慣れていないが，今風のオプションのほうが意味を想像しやすくなっている．
 
+# symbol
+上の例では，symbolの種類，大きさ，ペンの太さ，色等を指定していない．
+symobolの種類の例は，[Basic geometric symbols](https://www.generic-mapping-tools.org/GMTjl_doc/examples/plotting_functions/040_scatter/index.html) や [Symbols](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/common_features/symbols/index.html)
+に記載がある．
+
+また，scatterのオプションを指定した例としては，[Scatters](https://www.generic-mapping-tools.org/GMTjl_doc/examples/plotting_functions/040_scatter/index.html) をみると，意味がわかりやすい．
+
+```julia:./scatter4.jl
+using GMT
+using Random
+n=100
+Random.seed!(20250214)
+x = randn(n)
+y = randn(n)
+size  =rand(n)*0.5 
+flfig = joinpath(@OUTPUT, "scatter4")
+gmtbegin(flfig, fmt="png")
+basemap(region=(-3.5, 3.5, -3.5, 3.5), 
+    figscale=(1.0, 1.0), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel="x", ylabel="y")
+scatter(x, y, 
+   marker=:*,               # マーカーの形状を星印に
+   markerline =(0.3, :red), # markerline を赤色で太さ0.3pに
+   markersize=size,         # markersize でマーカーサイズを指定
+   color=:magenta,          # color でマーカーの色を指定
+   alpha=50                 # alpha で透明度を指定
+)
+gmtend()
+```
+\fig{./output/scatter4}
+
+値により，色を塗り分けることができる．
+上の例では，`color=:magenta`のように色名で指定しているので，同じ色になっているが，
+カラーパレット名を指定し，`zcolor`を指定すると，値に応じた色の塗り分けができる.
+
+```julia:./scatter5.jl
+using GMT
+using Random
+n=100
+Random.seed!(20250214)
+x = randn(n)
+y = randn(n)
+size  = rand(n)*0.5
+zcolor = rand(n)
+
+flfig = joinpath(@OUTPUT, "scatter5")
+gmtbegin(flfig, fmt="png")
+basemap(region=(-3.5, 3.5, -3.5, 3.5), 
+    figscale=(1.0, 1.0), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel="x", ylabel="y")
+scatter(x, y, 
+   marker=:*,               # マーカーの形状を星印に
+   markerline =(0.3, :red), # markerline を赤色で太さ0.3pに
+   markersize=size,         # markersize でマーカーサイズを指定
+   color=:rainbow,          # color でカラーパレットを指定
+   zcolor=zcolor,            # 塗り分けるための値を指定
+   alpha=50                 # alpha で透明度を指定
+)
+gmtend()
+```
+\fig{./output/scatter5}
+
+* 大きさが変わっているのがなぜかわからず
+
+
+長方形についても書くことはできるが，向きや大きさを描くためには，
+GMTのオプションである必要があるようだ．
+
+```julia:./scatter6.jl
+using GMT
+using Random
+n=100
+Random.seed!(20250214)
+x = randn(n)
+y = randn(n)
+azimuth = 360.0*rand(n)
+size  =rand(n)*0.5 .+ 0.15
+size2 =size./2.0
+color = rand(n)
+C = makecpt(C="rainbow", T=(0,1,0.1), continuous=true)
+ 
+xy=hcat(x, y, color, azimuth, size, size2) 
+
+flfig = joinpath(@OUTPUT, "scatter6")
+gmtbegin(flfig, fmt="png")
+basemap(region=(-3.5, 3.5, -3.5, 3.5), 
+    figscale=(1.0, 1.0), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel="x", ylabel="y")
+scatter(xy, 
+   S="J",                   # マーカーの形状を長方形に．GMTのオプション
+   markerline =(0.3, :red), # markerline を赤色で太さ0.3pに
+   color=C,                 # color でマーカーの色を指定．データの3列目．
+   alpha=25                 # alpha で透明度を指定
+)
+colorbar()
+gmtend()
+```
+\fig{./output/scatter6}
+
+なかなか難敵．
+GMTのオプションじゃないと動かないケースがある．
+もともと，"J"のシンボルは `GMT.jl` のマニュアルにないので，渡し方を試さないといけない．
+
 # gmtbegin と gmtend
 
-個人的な好みで，`gmtbegin` と `gmtend` を使っているとしたが，
+個人的な好みで，`gmtbegin` と `gmtend` を使っているとした．
+GMT Ver.6になって登場した機能で，modern mode と称している．
+`GMT.jl` でも，`gmtbegin` と `gmtend` が使えたので，そのまま使っているが，
 [GMTmodule](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/modules/)
-には，リストアップされていない．documentation で検索するといくつか [使用例](https://www.generic-mapping-tools.org/GMTjl_doc/search/index.html?q=gmtbegin) がでてくるのみである．
+には，リストアップされていない，ということにこのページの作成時点で気がついた．
+documentation で検索するといくつか [使用例](https://www.generic-mapping-tools.org/GMTjl_doc/search/index.html?q=gmtbegin) がでてくるのみである．
 
-# 以下は残骸
-
-If you would like to show code as well as what the code outputs, you only need to specify where the script corresponding to the code block will be saved.
-
-Indeed, what happens is that the code block gets saved as a script which then gets executed.
-This also allows for that block to not be re-executed every time you change something _else_ on the page.
-
-Here's a simple example (change values in `a` to see the results being live updated):
-
-```julia:./exdot.jl
-using LinearAlgebra
-a = [1, 2, 3, 3, 4, 5, 2, 2]
-@show dot(a, a)
-println(dot(a, a))
+```julia:method_begin.jl
+using GMT 
+methods(gmtbegin)
+methods(gmtend)
 ```
+で内容を確認すると，
 
-You can now show what this would look like:
+**gmtbegin**
+~~~
+<pre>
+# 2 methods for generic function "gmtbegin" from GMT:
+ [1] gmtbegin(name::String; fmt, verbose)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:12
+ [2] gmtbegin(; ...)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:12
+</pre>
+~~~
 
-\output{./exdot.jl}
+**gmtend**
+~~~
+<pre>
+# 2 methods for generic function "gmtend" from GMT:
+ [1] gmtend(; ...)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:30
+ [2] gmtend(arg; show, verbose, reset)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:30
+</pre>
+~~~
+使い方としては，
+gmtbegin("ファイル名", fmt="png")
+というふうに，出力するファイル名とファイルの種類を指定する．
+GMTの[マニュアル](https://docs.generic-mapping-tools.org/latest/begin.html)に示されたサポートしているフォーマットは，以下の表の通り
 
-**Notes**:
-* you don't have to specify the `.jl` (see below),
-* you do need to explicitly use print statements or `@show` for things to show, so just leaving a variable at the end like you would in the REPL will show nothing,
-* only Julia code blocks are supported at the moment, there may be a support for scripting languages like `R` or `python` in the future,
-* the way you specify the path is important; see [the docs](https://tlienart.github.io/franklindocs/code/index.html#more_on_paths) for more info. If you don't care about how things are structured in your `/assets/` folder, just use `./scriptname.jl`. If you want things to be grouped, use `./group/scriptname.jl`. For more involved uses, see the docs.
+|Format|Explanation|
+|:----:|:----|
+|bmp|Microsoft Bit Map|
+|eps|Encapsulated PostScript|
+|jpg|Joint Photographic Experts Group Format|
+|pdf|Portable Document Format [Default]|
+|png|Portable Network Graphics|
+|PNG|Portable Network Graphics (with transparency layer)|
+|ppm|Portable Pixel Map|
+|ps|Plain PostScript|
+|tif|Tagged Image Format File|
+|view|Use format set by GMT_GRAPHICS_FORMAT|
 
-Lastly, it's important to realise that if you don't change the content of the code, then that code will only be executed _once_ even if you make multiple changes to the text around it.
-
-Here's another example,
-
-```julia:./code/ex2
-for i ∈ 1:5, j ∈ 1:5
-    print(" ", rpad("*"^i,5), lpad("*"^(6-i),5), j==5 ? "\n" : " "^4)
-end
-```
-
-which gives the (utterly useless):
-
-\output{./code/ex2}
-
-note the absence of `.jl`, it's inferred.
-
-You can also hide lines (that will be executed nonetheless):
-
-```julia:./code/ex3
-using Random
-Random.seed!(1) # hide
-@show randn(2)
-```
-
-\output{./code/ex3}
-
-
-## Including scripts
-
-Another approach is to include the content of a script that has already been executed.
-This can be an alternative to the description above if you'd like to only run the code once because it's particularly slow or because it's not Julia code.
-For this you can use the `\input` command specifying which language it should be tagged as:
-
-
-\input{julia}{/_assets/scripts/script1.jl} <!--_-->
-
-
-these scripts can be run in such a way that their output is also saved to file, see `scripts/generate_results.jl` for instance, and you can then also input the results:
-
-\output{/_assets/scripts/script1.jl} <!--_-->
-
-which is convenient if you're presenting code.
-
-**Note**: paths specification matters, see [the docs](https://tlienart.github.io/franklindocs/code/index.html#more_on_paths) for details.
-
-Using this approach with the `generate_results.jl` file also makes sure that all the code on your website works and that all results match the code which makes maintenance easier.
+GMT.jl ですべてを確認しているわけではない．
+よく使うのは，**png** と **pdf** である．

@@ -1,16 +1,16 @@
 +++
-title = "Menu 3"
+title = "Tags"
 +++
 
 # Working with tags
 
 **Example**:
 
-* page with tag [`syntax`](/tag/syntax/)
-* page with tag [`image`](/tag/image/)
+* page with tag [`GMT`](/tag/GMT/)
+* page with tag [`scatter`](/tag/scatter/)
 * page with tag [`code`](/tag/code/)
 
-\toc
+<!-- \toc
 
 ## Indicating tags
 
@@ -40,8 +40,8 @@ By default the tag list is very simple: it just collects all pages that match th
 
 You can customise this by defining your own `hfun_custom_taglist` function in the `utils.jl` file. The commented blueprint for the simple default setting is below and should give you an idea of how to  write your own generator.
 
-Assuming you've defined such a function, don't forget to use `{{custom_taglist}}` in the `_layout/tag.html` instead of the default `{{taglist}}`.
-
+Assuming you've defined such a function, don't forget to use `{{custom_taglist}}` in the `_layout/tag.html` instead of the default `{{taglist}}`.-->
+<!-- 
 ```julia
 function hfun_custom_taglist()::String
     # -----------------------------------------
@@ -92,12 +92,13 @@ function hfun_custom_taglist()::String
     return String(take!(c))
 end
 ```
-
+-->
+<!-- 
 For instance the default uses:
 
-```html
+<!-- ```html -->
 <!-- 1, 3: simple list-->
-<ul>...</ul>
+<!-- <ul>...</ul>-->
 <!-- 2: simple list item plugging in path + title -->
-<li><a href="/$rpath/">$title</a></li>
-```
+<!-- <li><a href="/$rpath/">$title</a></li>
+``` -->

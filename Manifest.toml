@@ -41,9 +41,9 @@ version = "1.0.9+0"
 
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
-git-tree-sha1 = "545a177179195e442472a1c4dc86982aa7a1bef0"
+git-tree-sha1 = "962834c22b66e32aa10f7611c08c8ca4e20749a9"
 uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
-version = "0.7.7"
+version = "0.7.8"
 
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -146,15 +146,17 @@ version = "3.13.1+0"
 
 [[deps.GMT]]
 deps = ["Dates", "Downloads", "GDAL_jll", "GMT_jll", "Ghostscript_jll", "LASzip_jll", "Leptonica_jll", "LinearAlgebra", "PROJ_jll", "PrecompileTools", "PrettyTables", "Printf", "Statistics", "Tables"]
-git-tree-sha1 = "7b492ab6fa102366d74ffad0a5b5046fdb58732c"
+git-tree-sha1 = "16e97106d72c210dd268e828b7f3e0ec7eb725e2"
 uuid = "5752ebe1-31b9-557e-87aa-f909b540aa54"
-version = "1.25.1"
+version = "1.26.0"
 
     [deps.GMT.extensions]
     GMTDataFramesExt = "DataFrames"
+    GMTParkerFFTExt = "FFTW"
 
     [deps.GMT.weakdeps]
     DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+    FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 
 [[deps.GMT_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "FFTW_jll", "GDAL_jll", "Ghostscript_jll", "Glib_jll", "JLLWrappers", "LAPACK32_jll", "LLVMOpenMP_jll", "LibCURL_jll", "Libdl", "NetCDF_jll", "OpenBLAS32_jll", "PCRE_jll", "PROJ_jll"]
@@ -425,9 +427,9 @@ version = "0.1.11"
 
 [[deps.MPItrampoline_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "MPIPreferences", "TOML"]
-git-tree-sha1 = "70e830dab5d0775183c99fc75e4c24c614ed7142"
+git-tree-sha1 = "97aac4a518b6f01851f8821272780e1ba56fe90d"
 uuid = "f1f71cc9-e9ae-5b93-9b94-4fe0e1ad3748"
-version = "5.5.1+2"
+version = "5.5.2+0"
 
 [[deps.Markdown]]
 deps = ["Base64"]
@@ -506,9 +508,9 @@ version = "1.4.3"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "7493f61f55a6cce7325f197443aa80d32554ba10"
+git-tree-sha1 = "a9697f1d06cc3eb3fb3ad49cc67f2cfabaac31ea"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.0.15+3"
+version = "3.0.16+0"
 
 [[deps.OrderedCollections]]
 git-tree-sha1 = "cc4054e898b852042d7b503313f7ad03de99c3dd"
@@ -628,9 +630,9 @@ version = "1.11.1"
 
 [[deps.StringManipulation]]
 deps = ["PrecompileTools"]
-git-tree-sha1 = "a6b1675a536c5ad1a60e5a5153e1fee12eb146e3"
+git-tree-sha1 = "725421ae8e530ec29bcbdddbe91ff8053421d023"
 uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
-version = "0.4.0"
+version = "0.4.1"
 
 [[deps.StyledStrings]]
 uuid = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
