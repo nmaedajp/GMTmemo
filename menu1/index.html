@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/pure.css"> <link rel=stylesheet  href="/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/assets/favicon.png"> <title>散布図</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">GMT</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/" class=pure-menu-link >Home</a> <li class="pure-menu-item pure-menu-selected"><a href="/menu1/" class=pure-menu-link >散布図</a> <li class="pure-menu-item "><a href="/menu2/" class=pure-menu-link >More goodies</a> <li class="pure-menu-item "><a href="/menu3/" class=pure-menu-link >Tags</a> </ul> </div> </div> <div id=main > <div class=header > <h1>散布図</h1> <h2>GMT.jl 使用メモ</h2> </div> <div class=franklin-content > <div class=franklin-toc ><ol><li><a href="#とりあえず実行">とりあえず実行</a><li><a href="#軸の設定">軸の設定</a><li><a href="#gmtbegin_と_gmtend">gmtbegin と gmtend</a><li><a href="#以下は残骸">以下は残骸</a><ol><li><a href="#including_scripts">Including scripts</a></ol></ol></div> <h1 id="とりあえず実行"><a href="#とりあえず実行" class=header-anchor >とりあえず実行</a></h1> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Random
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/pure.css"> <link rel=stylesheet  href="/css/side-menu.css"> <style> .franklin-content{padding-left:10%;} @media (min-width: 940px) { .franklin-content {width: 640px; margin-left: 0px; padding-left: 80px;} .header {width: 700px;} } </style> <link rel=icon  href="/assets/favicon.png"> <title>散布図</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a class=pure-menu-heading  href="#">GMT</a> <ul class=pure-menu-list > <li class="pure-menu-item "><a href="/" class=pure-menu-link >Home</a> <li class="pure-menu-item pure-menu-selected"><a href="/menu1/" class=pure-menu-link >散布図</a> <li class="pure-menu-item "><a href="/menu3/" class=pure-menu-link >Tags</a> </ul> </div> </div> <div id=main > <div class=header > <h1>散布図</h1> <h2>GMT.jl 使用メモ</h2> </div> <div class=franklin-content > <div class=franklin-toc ><ol><li><a href="#とりあえず実行">とりあえず実行</a><li><a href="#軸の設定">軸の設定</a><li><a href="#symbol">symbol</a><li><a href="#gmtbegin_と_gmtend">gmtbegin と gmtend</a></ol></div> <h1 id="とりあえず実行"><a href="#とりあえず実行" class=header-anchor >とりあえず実行</a></h1> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Random
 <span class=hljs-keyword >using</span> GMT
 Random.seed!(<span class=hljs-number >20250211</span>) <span class=hljs-comment ># 乱数の種を日付にしている</span>
 n = <span class=hljs-number >100</span>
@@ -23,7 +23,7 @@ gmtbegin(flfig, fmt=<span class=hljs-string >&quot;png&quot;</span>)
         yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
         xlabel=<span class=hljs-string >&quot;x&quot;</span>, ylabel=<span class=hljs-string >&quot;y&quot;</span>)
     scatter(x, y)
-gmtend()</code></pre> <img src="/assets/menu1/output/scatter2.png" alt=""> <p>図の大きさを指定したいときは，<code>figscale</code> の代わりに <code>figsize&#61;&#40;7.0, 7.0&#41;</code> と指定すれば良い．</p> <p>ここでは，今風のオプションで書いているが，かつてのオプション形式も使うことができる．</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Random
+gmtend()</code></pre> <img src="/assets/menu1/output/scatter2.png" alt=""> <p>図の大きさを指定したいときは，<code>figscale</code> の代わりに <code>figsize&#61;&#40;7.0, 7.0&#41;</code> と指定すれば良い．</p> <p>ここでは，<code>GMT.jl</code> 風のオプションで書いているが，<code>GMT</code> のオプション形式も使うことができる．</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Random
 <span class=hljs-keyword >using</span> GMT
 Random.seed!(<span class=hljs-number >20250211</span>) <span class=hljs-comment ># 乱数の種を日付にしている</span>
 n = <span class=hljs-number >100</span>
@@ -38,28 +38,97 @@ gmtbegin(flfig, fmt=<span class=hljs-string >&quot;png&quot;</span>)
         xlabel=<span class=hljs-string >&quot;x&quot;</span>, ylabel=<span class=hljs-string >&quot;y&quot;</span>
         )
     scatter(x, y)
-gmtend()</code></pre> <img src="/assets/menu1/output/scatter3.png" alt=""> <p>ただし，<code>xlabel&#61;&quot;x&quot;, ylabel&#61;&quot;y&quot;</code> の部分は今風である． まだ，慣れていないが，今風のオプションのほうが意味を想像しやすくなっている．</p> <h1 id="gmtbegin_と_gmtend"><a href="#gmtbegin_と_gmtend" class=header-anchor >gmtbegin と gmtend</a></h1> <p>個人的な好みで，<code>gmtbegin</code> と <code>gmtend</code> を使っているとしたが， <a href="https://www.generic-mapping-tools.org/GMTjl_doc/documentation/modules/">GMTmodule</a> には，リストアップされていない．documentation で検索するといくつか <a href="https://www.generic-mapping-tools.org/GMTjl_doc/search/index.html?q&#61;gmtbegin">使用例</a> がでてくるのみである．</p> <h1 id="以下は残骸"><a href="#以下は残骸" class=header-anchor >以下は残骸</a></h1> <p>If you would like to show code as well as what the code outputs, you only need to specify where the script corresponding to the code block will be saved.</p> <p>Indeed, what happens is that the code block gets saved as a script which then gets executed. This also allows for that block to not be re-executed every time you change something <em>else</em> on the page.</p> <p>Here&#39;s a simple example &#40;change values in <code>a</code> to see the results being live updated&#41;:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> LinearAlgebra
-a = [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >3</span>, <span class=hljs-number >4</span>, <span class=hljs-number >5</span>, <span class=hljs-number >2</span>, <span class=hljs-number >2</span>]
-<span class=hljs-meta >@show</span> dot(a, a)
-println(dot(a, a))</code></pre> <p>You can now show what this would look like:</p> <pre><code class="plaintext hljs">dot(a, a) = 72
-72
-</code></pre> <p><strong>Notes</strong>:</p> <ul> <li><p>you don&#39;t have to specify the <code>.jl</code> &#40;see below&#41;,</p> <li><p>you do need to explicitly use print statements or <code>@show</code> for things to show, so just leaving a variable at the end like you would in the REPL will show nothing,</p> <li><p>only Julia code blocks are supported at the moment, there may be a support for scripting languages like <code>R</code> or <code>python</code> in the future,</p> <li><p>the way you specify the path is important; see <a href="https://tlienart.github.io/franklindocs/code/index.html#more_on_paths">the docs</a> for more info. If you don&#39;t care about how things are structured in your <code>/assets/</code> folder, just use <code>./scriptname.jl</code>. If you want things to be grouped, use <code>./group/scriptname.jl</code>. For more involved uses, see the docs.</p> </ul> <p>Lastly, it&#39;s important to realise that if you don&#39;t change the content of the code, then that code will only be executed <em>once</em> even if you make multiple changes to the text around it.</p> <p>Here&#39;s another example,</p> <pre><code class="julia hljs"><span class=hljs-keyword >for</span> i ∈ <span class=hljs-number >1</span>:<span class=hljs-number >5</span>, j ∈ <span class=hljs-number >1</span>:<span class=hljs-number >5</span>
-    print(<span class=hljs-string >&quot; &quot;</span>, rpad(<span class=hljs-string >&quot;*&quot;</span>^i,<span class=hljs-number >5</span>), lpad(<span class=hljs-string >&quot;*&quot;</span>^(<span class=hljs-number >6</span>-i),<span class=hljs-number >5</span>), j==<span class=hljs-number >5</span> ? <span class=hljs-string >&quot;\n&quot;</span> : <span class=hljs-string >&quot; &quot;</span>^<span class=hljs-number >4</span>)
-<span class=hljs-keyword >end</span></code></pre> <p>which gives the &#40;utterly useless&#41;:</p> <pre><code class="plaintext hljs"> *    *****     *    *****     *    *****     *    *****     *    *****
- **    ****     **    ****     **    ****     **    ****     **    ****
- ***    ***     ***    ***     ***    ***     ***    ***     ***    ***
- ****    **     ****    **     ****    **     ****    **     ****    **
- *****    *     *****    *     *****    *     *****    *     *****    *
-</code></pre> <p>note the absence of <code>.jl</code>, it&#39;s inferred.</p> <p>You can also hide lines &#40;that will be executed nonetheless&#41;:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Random
-<span class=hljs-meta >@show</span> randn(<span class=hljs-number >2</span>)</code></pre> <pre><code class="plaintext hljs">randn(2) = [-0.07058313895389791, 0.5314767537831963]
-</code></pre> <h2 id=including_scripts ><a href="#including_scripts" class=header-anchor >Including scripts</a></h2> <p>Another approach is to include the content of a script that has already been executed. This can be an alternative to the description above if you&#39;d like to only run the code once because it&#39;s particularly slow or because it&#39;s not Julia code. For this you can use the <code>\input</code> command specifying which language it should be tagged as:</p> <p><pre><code class="julia hljs">x = randn(<span class=hljs-number >5</span>)
-y = randn(<span class=hljs-number >5</span>)
+gmtend()</code></pre> <img src="/assets/menu1/output/scatter3.png" alt=""> <p>ただし，<code>xlabel&#61;&quot;x&quot;, ylabel&#61;&quot;y&quot;</code> の部分は今風である． まだ，慣れていないが，今風のオプションのほうが意味を想像しやすくなっている．</p> <h1 id=symbol ><a href="#symbol" class=header-anchor >symbol</a></h1> <p>上の例では，symbolの種類，大きさ，ペンの太さ，色等を指定していない． symobolの種類の例は，<a href="https://www.generic-mapping-tools.org/GMTjl_doc/examples/plotting_functions/040_scatter/index.html">Basic geometric symbols</a> や <a href="https://www.generic-mapping-tools.org/GMTjl_doc/documentation/common_features/symbols/index.html">Symbols</a> に記載がある．</p> <p>また，scatterのオプションを指定した例としては，<a href="https://www.generic-mapping-tools.org/GMTjl_doc/examples/plotting_functions/040_scatter/index.html">Scatters</a> をみると，意味がわかりやすい．</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> GMT
+<span class=hljs-keyword >using</span> Random
+n=<span class=hljs-number >100</span>
+Random.seed!(<span class=hljs-number >20250214</span>)
+x = randn(n)
+y = randn(n)
+size  =rand(n)*<span class=hljs-number >0.5</span> 
+flfig = joinpath(<span class=hljs-meta >@OUTPUT</span>, <span class=hljs-string >&quot;scatter4&quot;</span>)
+gmtbegin(flfig, fmt=<span class=hljs-string >&quot;png&quot;</span>)
+basemap(region=(-<span class=hljs-number >3.5</span>, <span class=hljs-number >3.5</span>, -<span class=hljs-number >3.5</span>, <span class=hljs-number >3.5</span>), 
+    figscale=(<span class=hljs-number >1.0</span>, <span class=hljs-number >1.0</span>), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel=<span class=hljs-string >&quot;x&quot;</span>, ylabel=<span class=hljs-string >&quot;y&quot;</span>)
+scatter(x, y, 
+   marker=:*,               <span class=hljs-comment ># マーカーの形状を星印に</span>
+   markerline =(<span class=hljs-number >0.3</span>, :red), <span class=hljs-comment ># markerline を赤色で太さ0.3pに</span>
+   markersize=size,         <span class=hljs-comment ># markersize でマーカーサイズを指定</span>
+   color=:magenta,          <span class=hljs-comment ># color でマーカーの色を指定</span>
+   alpha=<span class=hljs-number >50</span>                 <span class=hljs-comment ># alpha で透明度を指定</span>
+)
+gmtend()</code></pre> <img src="/assets/menu1/output/scatter4.png" alt=""> <p>値により，色を塗り分けることができる． 上の例では，<code>color&#61;:magenta</code>のように色名で指定しているので，同じ色になっているが， カラーパレット名を指定し，<code>zcolor</code>を指定すると，値に応じた色の塗り分けができる.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> GMT
+<span class=hljs-keyword >using</span> Random
+n=<span class=hljs-number >100</span>
+Random.seed!(<span class=hljs-number >20250214</span>)
+x = randn(n)
+y = randn(n)
+size  = rand(n)*<span class=hljs-number >0.5</span>
+zcolor = rand(n)
 
-<span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >5</span>
-    println(rpad(<span class=hljs-string >&quot;*&quot;</span>^i, <span class=hljs-number >10</span>, <span class=hljs-string >&#x27;-&#x27;</span>), round(dot(x, y), digits=<span class=hljs-number >1</span>))
-<span class=hljs-keyword >end</span></code></pre> </p> <p>these scripts can be run in such a way that their output is also saved to file, see <code>scripts/generate_results.jl</code> for instance, and you can then also input the results:</p> <p><pre><code class="plaintext hljs">*---------1.3
-**--------1.3
-***-------1.3
-****------1.3
-*****-----1.3
-</code></pre> </p> <p>which is convenient if you&#39;re presenting code.</p> <p><strong>Note</strong>: paths specification matters, see <a href="https://tlienart.github.io/franklindocs/code/index.html#more_on_paths">the docs</a> for details.</p> <p>Using this approach with the <code>generate_results.jl</code> file also makes sure that all the code on your website works and that all results match the code which makes maintenance easier.</p> <div class=page-foot > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Naoki Maeda. Last modified: February 14, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> <script src="/libs/pure/ui.min.js"></script> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
+flfig = joinpath(<span class=hljs-meta >@OUTPUT</span>, <span class=hljs-string >&quot;scatter5&quot;</span>)
+gmtbegin(flfig, fmt=<span class=hljs-string >&quot;png&quot;</span>)
+basemap(region=(-<span class=hljs-number >3.5</span>, <span class=hljs-number >3.5</span>, -<span class=hljs-number >3.5</span>, <span class=hljs-number >3.5</span>), 
+    figscale=(<span class=hljs-number >1.0</span>, <span class=hljs-number >1.0</span>), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel=<span class=hljs-string >&quot;x&quot;</span>, ylabel=<span class=hljs-string >&quot;y&quot;</span>)
+scatter(x, y, 
+   marker=:*,               <span class=hljs-comment ># マーカーの形状を星印に</span>
+   markerline =(<span class=hljs-number >0.3</span>, :red), <span class=hljs-comment ># markerline を赤色で太さ0.3pに</span>
+   markersize=size,         <span class=hljs-comment ># markersize でマーカーサイズを指定</span>
+   color=:rainbow,          <span class=hljs-comment ># color でカラーパレットを指定</span>
+   zcolor=zcolor,            <span class=hljs-comment ># 塗り分けるための値を指定</span>
+   alpha=<span class=hljs-number >50</span>                 <span class=hljs-comment ># alpha で透明度を指定</span>
+)
+gmtend()</code></pre> <img src="/assets/menu1/output/scatter5.png" alt=""> <ul> <li><p>大きさが変わっているのがなぜかわからず</p> </ul> <p>長方形についても書くことはできるが，向きや大きさを描くためには， GMTのオプションである必要があるようだ．</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> GMT
+<span class=hljs-keyword >using</span> Random
+n=<span class=hljs-number >100</span>
+Random.seed!(<span class=hljs-number >20250214</span>)
+x = randn(n)
+y = randn(n)
+azimuth = <span class=hljs-number >360.0</span>*rand(n)
+size  =rand(n)*<span class=hljs-number >0.5</span> .+ <span class=hljs-number >0.15</span>
+size2 =size./<span class=hljs-number >2.0</span>
+color = rand(n)
+C = makecpt(C=<span class=hljs-string >&quot;rainbow&quot;</span>, T=(<span class=hljs-number >0</span>,<span class=hljs-number >1</span>,<span class=hljs-number >0.1</span>), continuous=<span class=hljs-literal >true</span>)
+ 
+xy=hcat(x, y, color, azimuth, size, size2) 
+
+flfig = joinpath(<span class=hljs-meta >@OUTPUT</span>, <span class=hljs-string >&quot;scatter6&quot;</span>)
+gmtbegin(flfig, fmt=<span class=hljs-string >&quot;png&quot;</span>)
+basemap(region=(-<span class=hljs-number >3.5</span>, <span class=hljs-number >3.5</span>, -<span class=hljs-number >3.5</span>, <span class=hljs-number >3.5</span>), 
+    figscale=(<span class=hljs-number >1.0</span>, <span class=hljs-number >1.0</span>), 
+    proj=:linear, 
+    frame=(axes=:WSne), 
+    xaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    yaxis=(annot=:auto, ticks=:auto, grid=:auto), 
+    xlabel=<span class=hljs-string >&quot;x&quot;</span>, ylabel=<span class=hljs-string >&quot;y&quot;</span>)
+scatter(xy, 
+   S=<span class=hljs-string >&quot;J&quot;</span>,                   <span class=hljs-comment ># マーカーの形状を長方形に．GMTのオプション</span>
+   markerline =(<span class=hljs-number >0.3</span>, :red), <span class=hljs-comment ># markerline を赤色で太さ0.3pに</span>
+   color=C,                 <span class=hljs-comment ># color でマーカーの色を指定．データの3列目．</span>
+   alpha=<span class=hljs-number >25</span>                 <span class=hljs-comment ># alpha で透明度を指定</span>
+)
+colorbar()
+gmtend()</code></pre> <img src="/assets/menu1/output/scatter6.png" alt=""> <p>なかなか難敵． GMTのオプションじゃないと動かないケースがある． もともと，&quot;J&quot;のシンボルは <code>GMT.jl</code> のマニュアルにないので，渡し方を試さないといけない．</p> <h1 id="gmtbegin_と_gmtend"><a href="#gmtbegin_と_gmtend" class=header-anchor >gmtbegin と gmtend</a></h1> <p>個人的な好みで，<code>gmtbegin</code> と <code>gmtend</code> を使っているとした． GMT Ver.6になって登場した機能で，modern mode と称している． <code>GMT.jl</code> でも，<code>gmtbegin</code> と <code>gmtend</code> が使えたので，そのまま使っているが， <a href="https://www.generic-mapping-tools.org/GMTjl_doc/documentation/modules/">GMTmodule</a> には，リストアップされていない，ということにこのページの作成時点で気がついた． documentation で検索するといくつか <a href="https://www.generic-mapping-tools.org/GMTjl_doc/search/index.html?q&#61;gmtbegin">使用例</a> がでてくるのみである．</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> GMT 
+methods(gmtbegin)
+methods(gmtend)</code></pre> <p>で内容を確認すると，</p> <p><strong>gmtbegin</strong> <pre>
+# 2 methods for generic function "gmtbegin" from GMT:
+ [1] gmtbegin(name::String; fmt, verbose)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:12
+ [2] gmtbegin(; ...)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:12
+</pre> </p> <p><strong>gmtend</strong> <pre>
+# 2 methods for generic function "gmtend" from GMT:
+ [1] gmtend(; ...)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:30
+ [2] gmtend(arg; show, verbose, reset)
+     @ ~/.julia/packages/GMT/XAbNJ/src/gmtbegin.jl:30
+</pre> 使い方としては， gmtbegin&#40;&quot;ファイル名&quot;, fmt&#61;&quot;png&quot;&#41; というふうに，出力するファイル名とファイルの種類を指定する． GMTの<a href="https://docs.generic-mapping-tools.org/latest/begin.html">マニュアル</a>に示されたサポートしているフォーマットは，以下の表の通り</p> <table><tr><th align=center >Format<th align=left >Explanation<tr><td align=center >bmp<td align=left >Microsoft Bit Map<tr><td align=center >eps<td align=left >Encapsulated PostScript<tr><td align=center >jpg<td align=left >Joint Photographic Experts Group Format<tr><td align=center >pdf<td align=left >Portable Document Format &#91;Default&#93;<tr><td align=center >png<td align=left >Portable Network Graphics<tr><td align=center >PNG<td align=left >Portable Network Graphics &#40;with transparency layer&#41;<tr><td align=center >ppm<td align=left >Portable Pixel Map<tr><td align=center >ps<td align=left >Plain PostScript<tr><td align=center >tif<td align=left >Tagged Image Format File<tr><td align=center >view<td align=left >Use format set by GMT<em>GRAPHICS</em>FORMAT</table> <p>GMT.jl ですべてを確認しているわけではない． よく使うのは，<strong>png</strong> と <strong>pdf</strong> である．</p> <div class=page-foot > <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> Naoki Maeda. Last modified: February 14, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> <script src="/libs/pure/ui.min.js"></script> <script src="/libs/highlight/highlight.min.js"></script> <script>hljs.highlightAll();hljs.configure({tabReplace: ' '});</script>
