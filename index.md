@@ -48,3 +48,7 @@ juliaの[ダウンロードページ](https://julialang.org/downloads/)から
 * VSCode 上で，Jupyter notebook を使用しているので，以下をインストールしている．
   * julia の IJulia パッケージ
   * 拡張機能 jupyter 
+
+## リンク
+* Genric Mapping Tools [https://www.generic-mapping-tools.org](https://www.generic-mapping-tools.org)
+* GMT.jl [https://www.generic-mapping-tools.org/GMTjl_doc/](https://www.generic-mapping-tools.org/GMTjl_doc/)

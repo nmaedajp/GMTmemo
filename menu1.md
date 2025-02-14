@@ -86,6 +86,12 @@ gmtend()
 ただし，`xlabel="x", ylabel="y"` の部分は今風である．
 まだ，慣れていないが，今風のオプションのほうが意味を想像しやすくなっている．
 
+# gmtbegin と gmtend
+
+個人的な好みで，`gmtbegin` と `gmtend` を使っているとしたが，
+[GMTmodule](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/modules/)
+には，リストアップされていない．documentation で検索するといくつか [使用例](https://www.generic-mapping-tools.org/GMTjl_doc/search/index.html?q=gmtbegin) がでてくるのみである．
+
 # 以下は残骸
 
 If you would like to show code as well as what the code outputs, you only need to specify where the script corresponding to the code block will be saved.
