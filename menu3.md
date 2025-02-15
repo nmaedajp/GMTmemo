@@ -6,9 +6,14 @@ title = "Tags"
 
 **Example**:
 
-* page with tag [`GMT`](/tag/GMT/)
+* page with tag [`axis`](/tag/axis/)
+* page with tag [`basemap`](/tag/basemap/)
+* page with tag [`colorbar`](/tag/colorbar/)
+* page with tab [`grid data`](/tag/griddata/)
+* page with tab [`grdcounter`](/tag/grdcontour/)
+* page with tab [`grdimage`](/tag/grdimage/)
 * page with tag [`scatter`](/tag/scatter/)
-* page with tag [`code`](/tag/code/)
+* page with tag [`xyz2grd`](/tag/xyz2grd/)
 
 <!-- \toc
 

@@ -1,129 +1,84 @@
 +++
-title = "More goodies"
-hascode = true
-rss = "A short description of the page which would serve as **blurb** in a `RSS` feed; you can use basic markdown here but the whole description string must be a single line (not a multiline string). Like this one for instance. Keep in mind that styling is minimal in RSS so for instance don't expect maths or fancy styling to work; images should be ok though: ![](https://upload.wikimedia.org/wikipedia/en/b/b0/Rick_and_Morty_characters.jpg)"
-rss_title = "More goodies"
-rss_pubdate = Date(2019, 5, 1)
+title = "軸"
+hascode = false
 
-tags = ["syntax", "code", "image"]
+tags = ["axis", "basemap", "plot"]
 +++
 
-# More goodies
+# 軸
 
 \toc
 
-## More markdown support
+軸に関しては，[frame](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/common_opts/common_opts/index.html/) あたりが参考となる．
 
-The Julia Markdown parser in Julia's stdlib is not exactly complete and Franklin strives to bring useful extensions that are either defined in standard specs such as Common Mark or that just seem like useful extensions.
+## 線形と両対数
 
-* indirect references for instance [like so]
+最も基本的な線形のグラフと両対数のグラフの軸を描く．
 
-[like so]: http://existentialcomics.com/
+```julia:./ts_linear.jl
+using GMT
 
-or also for images
+# linear
+flout = joinpath(@OUTPUT, "ts_linear")
+gmtbegin(flout, fmt="png")
+basemap(
+    region=(0, 10, 0, 10),     # 図の範囲
+    figscale=(0.5, 0.4),       # 座標値１あたりの長さ(cm 単位)
+    proj=:linear,              # 線形
+    frame=(axes=:WSne),        # 軸を上(n)下(s)左(w)右(e)に描き，
+                               # 文字情報は左(W)と下(S)に
+    xaxis=(annot=2, ticks=1),  # x軸の文字を 2 毎，tick markを１毎に
+    yaxis=(annot=5, ticks=1),  # x軸の文字を 5 毎，tick markを１毎に
+    xlabel="x", ylabel="y"     # x軸に "x"，y軸に ”y" を
+    )
+gmtend()
 
-![][some image]
-
-some people find that useful as it allows referring multiple times to the same link for instance.
-
-[some image]: https://upload.wikimedia.org/wikipedia/commons/9/90/Krul.svg
-
-* un-qualified code blocks are allowed and are julia by default, indented code blocks are not supported by default (and there support will disappear completely in later version)
-
-```
-a = 1
-b = a+1
-```
-
-you can specify the default language with `@def lang = "julia"`.
-If you actually want a "plain" code block, qualify it as `plaintext` like
-
-```plaintext
-so this is plain-text stuff.
-```
-
-## A bit more highlighting
-
-Extension of highlighting for `pkg` an `shell` mode in Julia:
-
-```julia-repl
-(v1.4) pkg> add Franklin
-shell> blah
-julia> 1+1
-(Sandbox) pkg> resolve
-```
-
-you can tune the colouring in the CSS etc via the following classes:
-
-* `.hljs-meta` (for `julia>`)
-* `.hljs-metas` (for `shell>`)
-* `.hljs-metap` (for `...pkg>`)
-
-## More customisation
-
-Franklin, by design, gives you a lot of flexibility to define how you want stuff be done, this includes doing your own parsing/processing and your own HTML generation using Julia code.
-
-In order to do this, you can define two types of functions in a `utils.jl` file which will complement your `config.md` file:
-
-* `hfun_*` allow you to plug custom-generated HTML somewhere
-* `lx_*` allow you to do custom parsing of markdown and generation of HTML
-
-The former (`hfun_*`) is most likely to be useful.
-
-### Custom "hfun"
-
-If you define a function `hfun_bar` in the `utils.jl` then you have access to a new template function `{{bar ...}}`. The parameters are passed as a list of strings, for instance variable names but it  could just be strings as well.
-
-For instance:
-
-```julia
-function hfun_bar(vname)
-  val = Meta.parse(vname[1])
-  return round(sqrt(val), digits=2)
-end
+# log-log
+flout = joinpath(@OUTPUT, "ts_loglog")
+gmtbegin(flout, fmt="png")
+basemap(
+    region=(0.1, 100, 0.01, 100),      # 図の範囲
+    figscale=(2, 1.5),                 # 座標値１(1桁）あたりの長さ(cm 単位)
+    proj=:logxy,                       # log-log にする
+    frame=(axes=:WSne),
+    xaxis=(annot=2, ticks=3, grid=2,   # 文字1,2,5，tick mark 1毎，
+                                       # grid を1,2,5
+           label="frequency/Hz"),      # 軸のラベル
+    yaxis=(annot=1, ticks=1, grid = 3, # 文字を1桁毎，tick mark 1毎，
+                                       # grid を1毎
+           scale=:pow,                 # 文字を指数表示にする．
+           label="amplitude/m")               
+    )
+gmtend()
 ```
 
-~~~
-.hf {background-color:black;color:white;font-weight:bold;}
-~~~
+* 線形のグラフ
+\fig{./output/ts_linear}
 
-Can be called with `{{bar 4}}`: **{{bar 4}}**.
+* 両対数のグラフ
+\fig{./output/ts_loglog}
 
-Usually you will want to pass variable name (either local or global) and collect their value via one of `locvar`, `globvar` or `pagevar` depending on your use case.
-Let's have another toy example:
+## 横軸にπを入れる
 
-```julia
-function hfun_m1fill(vname)
-  var = vname[1]
-  return pagevar("menu1", var)
-end
+sin のグラフのとき，横軸に π を入れたくなる．
+
+```julia:./sin_theta.jl
+x = range(0.0, 4pi, length=401)  # 0 から ４π を 401 個 に刻む．
+y = sin.(x)
+flout = joinpath(@OUTPUT, "sin_theta")
+gmtbegin(flout, fmt="png")
+basemap(region=(0.0, 4pi, -1.1, 1.1), figsize=(8,4),
+            axes=:WSne, 
+            xaxis=(custom=(pos=[0, pi/2, pi, 3pi/2,  2pi, 5pi/2, 3pi, 7pi/2, 4pi],
+            type=["ag", "fg", "fag @~p@~", "fg", "fag 2@~p@~", "fg", "afg 3@~p@~", "fg", "afg 4@~p@~"]),),
+            xlabel="@~q@~ [rad]",
+            yaxis=(annot=0.5, ticks=0.1, grid=0.5),
+            ) 
+plot(x, y, pen=(0.5, :blue))
+gmtend()
 ```
 
-Which you can use like this `{{m1fill title}}`: **{{m1fill title}}**. Of course  in this specific case you could also have used `{{fill title menu1}}`: **{{fill title menu1}}**.
+* $\sin\theta$ のグラフ
+\fig{./output/sin_theta}
 
-Of course these examples are not very useful, in practice you might want to use it to generate actual HTML in a specific way using Julia code.
-For instance you can use it to customise how [tag pages look like](/menu3/#customising_tag_pages).
-
-A nice example of what you can do is in the [SymbolicUtils.jl manual](https://juliasymbolics.github.io/SymbolicUtils.jl/api/) where they use a `hfun_` to generate HTML encapsulating the content of code docstrings, in a way doing something similar to what Documenter does. See [how they defined it](https://github.com/JuliaSymbolics/SymbolicUtils.jl/blob/website/utils.jl).
-
-**Note**: the  output **will not** be reprocessed by Franklin, if you want to generate markdown which should be processed by Franklin, then use `return fd2html(markdown, internal=true)` at the end.
-
-### Custom "lx"
-
-These commands will look the same as latex commands but what they do with their content is now entirely controlled by your code.
-You can use this to do your own parsing of specific chunks of your content if you so desire.
-
-The definition of `lx_*` commands **must** look like this:
-
-```julia
-function lx_baz(com, _)
-  # keep this first line
-  brace_content = Franklin.content(com.braces[1]) # input string
-  # do whatever you want here
-  return uppercase(brace_content)
-end
-```
-
-You can call the above with `\baz{some string}`: \baz{some string}.
-
-**Note**: the output **will be** reprocessed by Franklin, if you want to avoid this, then escape the output by using `return "~~~" * s * "~~~"` and it will be plugged  in as is in the HTML.
+$\pi$ や 上付き・下付きなどの表示の仕方は，GMTマニュアルの [text](https://docs.generic-mapping-tools.org/latest/text.html) にある．
