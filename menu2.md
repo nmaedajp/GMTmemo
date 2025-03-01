@@ -5,13 +5,11 @@ hascode = false
 tags = ["axis", "basemap", "plot"]
 +++
 
-# 軸
+軸に関しては，[frame](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/common_opts/common_opts/index.html/) あたりが参考となる．
 
 \toc
 
-軸に関しては，[frame](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/common_opts/common_opts/index.html/) あたりが参考となる．
-
-## 線形と両対数
+# 線形と両対数
 
 最も基本的な線形のグラフと両対数のグラフの軸を描く．
 
@@ -58,7 +56,7 @@ gmtend()
 * 両対数のグラフ
 \fig{./output/ts_loglog}
 
-## 横軸にπを入れる
+# 横軸にπを入れる
 
 sin のグラフのとき，横軸に π を入れたくなる．
 

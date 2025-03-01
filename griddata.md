@@ -5,11 +5,9 @@ hascode = false
 tags = ["griddata", "basemap", "grdimage", "grdcontour", "xyz2grd", "colorbar"]
 +++
 
-# グリッドデータ
-
 \toc
 
-## 関数からグリッドデータへ
+# 関数からグリッドデータへ
 
 $f(x, y)$ のような2次元の関数からグリッドデータを作る．
 
@@ -83,7 +81,7 @@ gmtend()
 
 解像度を 300 dpi に設定すると，なめらかに補間されるようである．
 
-## `xyz2grd` の `Z` オプション
+# `xyz2grd` の `Z` オプション
 
 `xyz2grd` の `Z` オプションは，配列のデータの並び順を指定している． 
 
@@ -94,7 +92,7 @@ gmtend()
 |Z="LT"![Z="LT"](/assets/grd/zlt.gif)|Z="LB"![Z="LB"](/assets/grd/zlb.gif)|
 |Z="RT"![Z="RT"](/assets/grd/zrt.gif)|Z="RB"![Z="RB"](/assets/grd/zrb.gif)|
 
-## mat2grid
+# mat2grid
 
 * わざわざ`vset`という関数を作らなくても，`mat2grid` という関数があった．
 * 説明は，[mat2grid](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/utilities/mat2grid/index.html) にある．

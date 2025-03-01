@@ -5,13 +5,11 @@ hascode = false
 tags = ["axis", "basemap", "plot"]
 +++
 
-# 日付型の軸
+日付型の軸については，GMT.jlのドキュメント[Cartesian time axes](https://www.generic-mapping-tools.org/GMTjl_doc/examples/frames/frames/#cartesian_time_axes/) あたりが参考となる．
 
 \toc
 
-日付型の軸については，GMT.jlのドキュメント[Cartesian time axes](https://www.generic-mapping-tools.org/GMTjl_doc/examples/frames/frames/#cartesian_time_axes/) あたりが参考となる．
-
-## 自動で軸を描く
+# 自動で軸を描く
 
 日付型の軸を自動でいくつか描いてみる．
 
@@ -63,7 +61,7 @@ gmtend()
 ひとつ上のカテゴリー（時刻だけではなく日も追加，何年何月を入れたい，年月を入れたい）
 など，もう少し整えたい気持ちになってくる．
 
-## 第２軸を使う
+# 第２軸を使う
 
 こんなときには，第２軸を使って，軸の表記を整える．
 
