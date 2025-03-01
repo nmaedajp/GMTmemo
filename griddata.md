@@ -125,3 +125,131 @@ gmtend()
 ```
 
 \fig{./output/kansugrd}
+
+# gridline node と pixel node
+@@date
+20250301
+@@
+`mat2grid` は名前の通り，配列から grd 形式を作成する関数である．
+配列を grd 形式に変換するとき，glidline node registration と
+pixel node registration という指定の仕方がある．
+イメージとしては，
+
+![glidline と pixel](/assets/grd/grid_node.jpg) 
+
+に示したように，grid 線の交点の値とするか，
+grid の真ん中の値をするか，の違いである．
+
+## テストコード
+
+```julia:./nodepixel.jl
+#
+# gridline node registration と pixel node registration のテスト
+#
+# データの作成
+# pixel の値
+x44 = reshape([Float64(i) for i=1:16], 4, 4) 
+# gridline 上の値
+# pixel で与えた値を元にして与えている
+x55 = reshape([-1.5+div(i-1,5)*4+mod(i-1,5) for i=1:25], 5, 5)
+
+# 配列の表示 
+println("x44")
+for i = 1:4
+    for j = 1:4
+        print("$(x44[i, j]) ")
+    end
+    print("\n")
+end
+    print("\n")
+println("x55")
+for i = 1:5
+    for j = 1:5
+        print("$(x55[i, j]) ")
+    end
+    print("\n")
+end
+#
+using GMT
+# grd の作成
+x1 = -2.0; x2 = 2.0 # x の下限と上限
+y1 = -2.0; y2 = 2.0 # y の下限と上限
+# reg = 1 が pixel registration
+Grd44 = mat2grid(x44, x = [x1 x2], y = [y1 y2], reg=1)
+# default は gridline registration
+Grd55 = mat2grid(x55, x = [x1 x2], y = [y1 y2])
+
+# 図を描く
+C = makecpt(cmap=:rainbow, range=(-2, 20)) # カラーパレットの作成
+# 
+flout = joinpath(@OUTPUT, "pixel")
+gmtbegin(flout, fmt="png")
+    grdimage(Grd44, B="afg WSne", J="X6c/6c", 
+            R="-3/3/-3/3",  # 範囲を広めにとっている 
+            color=C, title="pixel")
+    colorbar(frame=(annot=:auto,))
+gmtend()
+flout = joinpath(@OUTPUT, "pixel100")
+gmtbegin(flout, fmt="png")
+    grdimage(Grd44, B="afg WSne", J="X6c/6c", 
+            R="-3/3/-3/3",  # 範囲を広めにとっている 
+            dpi=100,        # 解像度を100 dpiに 
+            color=C, title="pixel 100")
+    colorbar(frame=(annot=:auto,))
+gmtend()
+flout = joinpath(@OUTPUT, "node")
+gmtbegin(flout, fmt="png")
+    grdimage(Grd55, B="afg WSne", J="X6c/6c", 
+            R="-3/3/-3/3",  # 範囲を広めにとっている 
+            color=C, title="gridline")
+    colorbar(frame=(annot=:auto,))
+gmtend()
+flout = joinpath(@OUTPUT, "node100")
+gmtbegin(flout, fmt="png")
+    grdimage(Grd55, B="afg WSne", J="X6c/6c", 
+            R="-3/3/-3/3",  # 範囲を広めにとっている 
+            dpi=100,        # 解像度を100 dpiに 
+            color=C, title="gridline 100")
+    colorbar(frame=(annot=:auto,))
+gmtend()
+```
+## x44 と x55 の値
+  * x44 は単純に 1〜16 を並べただけ
+  * x55 は x44 をみて作成している．
+\output{./nodepixel}
+
+## 配列とグリッドへの割当
+下の図は，pixel node registration
+
+\fig{./output/pixel}
+
+これをみると
+* 値は左下から上へ増えていき，右に移って再び下から上に増えていく
+* 配列のメモリ上での順序に従って，上に示した `Z=”LB"` の感じでグリッドにあてはめられている．
+
+## gridline node registration
+下の図は，gridline node registration
+
+\fig{./output/node}
+
+* 割当の順序は，pixel node registration と同じで，メモリ上の順序で `Z=”LB"` の感じ
+* x，y の 指定した範囲を半グリッド分はみ出している．
+* GMT の `grdimage` でも，このようになるかどうかは，未確認．
+
+## dpi オプション
+`grdimage` のオプションで，`dpi=100` をつけると解像度が上がる．
+そして，補間した値に基づいて，図を作成してくれる．
+
+どちらも，`dpi=100` を指定して図を作成した．
+
+\fig{./output/pixel100}
+
+　　
+
+\fig{./output/node100}
+
+* `dpi=100` のオプションを付けると，どちらも，指定した x，yの範囲に収まっている．
+* 補間は，grid の範囲についてのみ行われている．
+
+なお，関数については，pixel node registration の指定をすると，
+グリッドの数が合わないといわれて，エラーとなった．
