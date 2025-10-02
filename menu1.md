@@ -7,10 +7,14 @@ hascode = false
 tags = ["scatter", "basemap", "makecpt", "colorbar"]
 +++
 
+ここでは，散布図を作成する．
+
 \toc
 
 # とりあえず実行
-
+@@date
+(2025-02-11)
+@@
 ```julia:./scatter1.jl
 using Random
 using GMT
@@ -30,6 +34,9 @@ scatter(x, y, savefig=flfig)
 通常のスクリプトには，不要である．
 
 # 軸の設定
+@@date
+(2025-02-11)
+@@
 
 前の例では，図のファイルを `savefig` というオプションで指定しているが，
 個人的な好みで，`gmtbegin` と `gmtend` を使用し，保存するファイル名を
@@ -88,6 +95,9 @@ gmtend()
 まだ，慣れていないが，今風のオプションのほうが意味を想像しやすくなっている．
 
 # symbol
+@@date
+(2025-02-14)
+@@
 上の例では，symbolの種類，大きさ，ペンの太さ，色等を指定していない．
 symobolの種類の例は，[Basic geometric symbols](https://www.generic-mapping-tools.org/GMTjl_doc/examples/plotting_functions/040_scatter/index.html) や [Symbols](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/common_features/symbols/index.html)
 に記載がある．
@@ -283,7 +293,9 @@ gmtend()
 * 単色 with GMT.jl 風オプションでは，座標上の大きさになっているのだろうか．
 
 # gmtbegin と gmtend
-
+@@date
+(2025-02-14)
+@@
 個人的な好みで，`gmtbegin` と `gmtend` を使っているとした．
 GMT Ver.6になって登場した機能で，modern mode と称している．
 `GMT.jl` でも，`gmtbegin` と `gmtend` が使えたので，そのまま使っているが，

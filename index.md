@@ -2,6 +2,10 @@
 @def tags = ["julia", "GMTjl"]
 
 # GMT memo
+@@date
+(2025-02-11)　　\\
+(2025-10-01追加)
+@@
 
 Generic Mapping Tools は，地図を作成する際に有用なツールである．
 また，ふつうのグラフも作成することができる．
@@ -24,7 +28,8 @@ julia に切り替えてからいろいろグラフを作成してきたが，
 `@OUTPUT` は `Franklin.jl` で指定している出力先であり，別の環境で動作させるときには，
 適宜，適切なディレクトリ名への変更が必要である．
 
-2025年2月11日現在，`GMT6.5.0`，`julia1.11.3` を使用している．
+2025年2月11日現在，`GMT6.5.0`，`julia1.11.3` を使用している．\\
+⇒ 2025年10月 1日現在，`GMT6.6.0`，`julia1.11.7` を使用している． 
 
 \tableofcontents <!-- you can use \toc as well -->
 
@@ -53,6 +58,9 @@ juliaの[ダウンロードページ](https://julialang.org/downloads/)から
   * 拡張機能 jupyter 
 
 ## リンク
+@@date
+(2025-02-14)
+@@
 * Genric Mapping Tools [https://www.generic-mapping-tools.org](https://www.generic-mapping-tools.org)
   * Wessel et al.:The Generic Mapping Tools Version 6, 2019. [https://doi.org/10.1029/2019GC008515](https://doi.org/10.1029/2019GC008515) 
 * GMT.jl [https://www.generic-mapping-tools.org/GMTjl_doc/](https://www.generic-mapping-tools.org/GMTjl_doc/)
