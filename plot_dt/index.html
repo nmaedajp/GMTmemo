@@ -4,7 +4,7 @@ ERROR: MethodError: no method matching GMTdataset(::Matrix{…},
 ::String, ::Vector{…}, ::String, ::String, ::Int64, ::Int64)
 The type `GMTdataset` exists, but no method is defined for this 
 combination of argument types when trying to construct it.
-</pre> となっている． <a href="https://www.generic-mapping-tools.org/GMTjl_doc/documentation/general/types/index.html#dataset_type/">GMTdataset</a> の項目をみると， <pre>
+</pre> となっている． <a href="https://www.generic-mapping-tools.org/GMTjl_doc/documentation/general/types.html#sec-dataset-type">GMTdataset</a> の項目をみると，</p> <p> <pre>
 struct GMTdataset{T<:Real, N} <: AbstractArray{T,N}
     data::Array{T,N}           # Mx2 Matrix with segment data
     ds_bbox::Vector{Float64}   # Global BoundingBox (for when there are many segments)
