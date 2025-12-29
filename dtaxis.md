@@ -5,7 +5,7 @@ hascode = false
 tags = ["axis", "basemap", "plot"]
 +++
 
-日付型の軸については，GMT.jlのドキュメント[Cartesian time axes](https://www.generic-mapping-tools.org/GMTjl_doc/examples/frames/frames/#cartesian_time_axes/) あたりが参考となる．
+日付型の軸については，GMT.jlのドキュメント[Cartesian time axes](https://www.generic-mapping-tools.org/GMTjl_doc/examples/frames/frames.html#cartesian-time-axes) あたりが参考となる．
 
 \toc
 

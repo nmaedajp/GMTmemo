@@ -36,7 +36,9 @@ combination of argument types when trying to construct it.
 </pre>
 ~~~
 となっている．
-[GMTdataset](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/general/types/index.html#dataset_type/) の項目をみると，
+[GMTdataset](https://www.generic-mapping-tools.org/GMTjl_doc/documentation/general/types.html#sec-dataset-type)
+の項目をみると，
+
 ~~~
 <pre>
 struct GMTdataset{T<:Real, N} <: AbstractArray{T,N}
